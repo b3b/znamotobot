@@ -4,6 +4,7 @@ black
 flake8
 codecov
 isort
+mypy
 pylint
 pytest
 pytest-asyncio
