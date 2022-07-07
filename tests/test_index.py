@@ -26,6 +26,6 @@ def test_index_loaded_from_md_file(mocker):
 
     obj = Index.from_markdown("tests/basic.md")
 
-    assert obj == Index([("Category 1", ["Topic 1", "Topic 2"])])
+    assert obj == Index([("Category 1", "✴ Topic 1\n\n✴ Topic 2")])
     parse_document.assert_called_once()
     assert "# Example" in parse_document.call_args[0][0]
