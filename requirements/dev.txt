@@ -8,6 +8,8 @@ astroid==2.11.6
     # via pylint
 attrs==21.4.0
     # via pytest
+beautifulsoup4==4.11.1
+    # via -r requirements/base.in
 black==22.6.0
     # via -r requirements/dev.in
 certifi==2021.10.8
@@ -40,6 +42,8 @@ isort==5.10.1
     #   pylint
 lazy-object-proxy==1.7.1
     # via astroid
+markdown==3.3.7
+    # via -r requirements/base.in
 marshmallow==3.14.1
     # via environs
 mccabe==0.6.1
@@ -86,9 +90,13 @@ pytest-mock==3.7.0
 python-dotenv==0.19.2
     # via environs
 requests==2.28.1
-    # via codecov
+    # via
+    #   -r requirements/base.in
+    #   codecov
 sentry-sdk==1.5.6
     # via -r requirements/base.in
+soupsieve==2.3.2.post1
+    # via beautifulsoup4
 tomli==2.0.1
     # via
     #   black
