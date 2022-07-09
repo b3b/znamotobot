@@ -19,7 +19,7 @@ Some text
 * [Topic 2.1](https://example.org/3) - Example "3" < '4'¢
 * [Topic 2.2](https://example.org/4)
 * Subtopic
-    * [Topic 2.3](https://example.org/5) - Example 5
+    * [Topic 2.3](https://example.org/5) - <span class="tg-spoiler">Example 5</span>
     * https://example.org/6 - Example 6
     * https://example.org/7
 * Topic 2.4

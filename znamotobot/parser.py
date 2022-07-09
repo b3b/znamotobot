@@ -49,7 +49,7 @@ def parse_topic_list(topic_list: Tag) -> Iterator[list[str]]:
 def parse_topic(topic: Tag) -> Iterator[str]:
     for elem in topic.children:
         match elem.name:
-            case "a" | "em" | "strong":
+            case "a" | "em" | "span" | "strong":
                 yield str(elem)
             case _:
                 yield html.escape(elem.text)

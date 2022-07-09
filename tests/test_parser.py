@@ -32,7 +32,11 @@ def test_document_parsed():
                     " - Example &quot;3&quot; &lt; &#x27;4&#x27;¢",
                 ],
                 ['<a href="https://example.org/4">Topic 2.2</a>'],
-                ['<a href="https://example.org/5">Topic 2.3</a>', " - Example 5"],
+                [
+                    '<a href="https://example.org/5">Topic 2.3</a>',
+                    " - ",
+                    '<span class="tg-spoiler">Example 5</span>',
+                ],
                 ["https://example.org/6 - Example 6"],
                 ["https://example.org/7"],
                 ["Topic 2.4"],
