@@ -26,3 +26,5 @@ coverage.xml
 .ropeproject
 
 .env
+
+cache/
