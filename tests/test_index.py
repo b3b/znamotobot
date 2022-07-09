@@ -29,3 +29,17 @@ def test_index_loaded_from_md_file(mocker):
     assert obj == Index([("Category 1", "✴ Topic 1\n\n✴ Topic 2")])
     parse_document.assert_called_once()
     assert "# Example" in parse_document.call_args[0][0]
+
+
+def test_topics_found():
+    index = Index(
+        [
+            ("Awesome list", []),
+            ("Not so awesome list", []),
+            ("Ordinary list", []),
+        ]
+    )
+    assert [k for k, v in index.search("awesome")] == [
+        "Awesome list",
+        "Not so awesome list",
+    ]

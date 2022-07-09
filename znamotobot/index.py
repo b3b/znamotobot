@@ -22,11 +22,12 @@ class Index(OrderedDict):
             )
 
     def search(self, text: str = "") -> list[tuple[str, str]]:
-        """Find topics sections that has `text` in title.
-        :todo:
-        """
-        text = text or text
-        return list(self.items())
+        """Find topics sections that has `text` in title."""
+        return [
+            (title, topics)
+            for title, topics in self.items()
+            if (not text) or re.search(text, title, re.IGNORECASE)
+        ]
 
 
 def main():
