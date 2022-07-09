@@ -9,7 +9,11 @@ aiofiles==0.8.0
 aiogram==2.21
     # via -r requirements/base.in
 aiohttp==3.8.1
-    # via aiogram
+    # via
+    #   aiogram
+    #   aioresponses
+aioresponses==0.7.3
+    # via -r requirements/dev.in
 aiosignal==1.2.0
     # via aiohttp
 astroid==2.11.6

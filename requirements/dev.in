@@ -1,5 +1,6 @@
 -r base.in
 
+aioresponses
 black
 flake8
 codecov
