@@ -27,7 +27,10 @@ def test_document_parsed():
         Section(
             title="Category 2",
             topics=[
-                ['<a href="https://example.org/3">Topic 2.1</a>', " - Example 3"],
+                [
+                    '<a href="https://example.org/3">Topic 2.1</a>',
+                    " - Example &quot;3&quot; &lt; &#x27;4&#x27;¢",
+                ],
                 ['<a href="https://example.org/4">Topic 2.2</a>'],
                 ['<a href="https://example.org/5">Topic 2.3</a>', " - Example 5"],
                 ["https://example.org/6 - Example 6"],

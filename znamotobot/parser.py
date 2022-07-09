@@ -1,4 +1,5 @@
 """Parse markdown lists of topics."""
+import html
 import re
 import sys
 from collections.abc import Iterator
@@ -51,7 +52,7 @@ def parse_topic(topic: Tag) -> Iterator[str]:
             case "a" | "em" | "strong":
                 yield str(elem)
             case _:
-                yield elem.text
+                yield html.escape(elem.text)
 
 
 def main():

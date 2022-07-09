@@ -16,7 +16,7 @@ Some text
 
 ## Category 2
 
-* [Topic 2.1](https://example.org/3) - Example 3
+* [Topic 2.1](https://example.org/3) - Example "3" < '4'¢
 * [Topic 2.2](https://example.org/4)
 * Subtopic
     * [Topic 2.3](https://example.org/5) - Example 5
