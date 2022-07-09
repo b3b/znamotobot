@@ -1,4 +1,5 @@
 """Storing and searching topics."""
+import re
 import sys
 from collections import OrderedDict
 from pprint import pprint
