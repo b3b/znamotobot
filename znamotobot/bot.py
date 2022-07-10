@@ -4,7 +4,6 @@ import logging
 
 from aiogram import Bot, Dispatcher, executor
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
-from aiogram.types import InlineQuery, InlineQueryResultArticle, InputTextMessageContent
 from aiogram.types import (
     InlineQuery,
     InlineQueryResultArticle,
