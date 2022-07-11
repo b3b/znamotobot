@@ -93,3 +93,25 @@ async def test_exceptions_handled(mocker):
 
     assert update_index.call_count == 2
     error_logger.assert_called_once_with("HTTP client error", exc_info=invalid_url)
+
+
+@pytest.mark.asyncio
+async def test_content_not_changed(mocker):
+    save_content = mocker.patch("znamotobot.updater.save_content")
+    session = ClientSession()
+
+    with aioresponses() as responses:
+        responses.get(
+            "https://example.org",
+            status=301,
+        )
+
+        new_etag = await download_file(
+            session, "https://example.org", "/tmp/index.md", etag="2128506"
+        )
+        await session.close()
+
+        headers = list(responses.requests.values())[0][0].kwargs["headers"]
+        assert headers["If-None-Match"] == "2128506"
+        assert new_etag == "2128506"
+        save_content.assert_not_called()
