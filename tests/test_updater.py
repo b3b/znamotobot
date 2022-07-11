@@ -1,7 +1,15 @@
+import asyncio
 from aioresponses import aioresponses
+
+import aiohttp
 from aiohttp import ClientSession
 import pytest
-from znamotobot.updater import download_file, save_content, update_index
+from unittest.mock import AsyncMock
+from znamotobot.updater import (
+    IndexUpdater,
+    download_file,
+    save_content,
+)
 from unittest.mock import ANY
 
 
@@ -9,16 +17,20 @@ from unittest.mock import ANY
 async def test_index_updated_from_url(tmpdir, mocker):
     cache_dir = tmpdir / "cache"
     assert not cache_dir.exists()
+
     mocker.patch("znamotobot.settings.INDEX_URL", "https://example.org")
     mocker.patch("znamotobot.settings.INDEX_CACHE_DIR", cache_dir)
     from_markdown = mocker.patch("znamotobot.index.Index.from_markdown")
     download_file = mocker.patch("znamotobot.updater.download_file")
 
-    await update_index()
+    updater = IndexUpdater()
+    await updater.update_index()
 
     download_file.assert_called_once()
     from_markdown.assert_called_once()
     assert cache_dir.exists()
+
+    await updater.shutdown()
 
 
 @pytest.mark.asyncio
@@ -31,11 +43,14 @@ async def test_index_updated_from_file_path(tmpdir, mocker):
     from_markdown = mocker.patch("znamotobot.index.Index.from_markdown")
     download_file = mocker.patch("znamotobot.updater.download_file")
 
-    await update_index()
+    updater = IndexUpdater()
+    await updater.update_index()
 
     download_file.assert_not_called()
     from_markdown.assert_called_once()
-    assert not cache_dir.exists()
+    assert cache_dir.exists()
+
+    await updater.shutdown()
 
 
 @pytest.mark.asyncio
@@ -55,3 +70,26 @@ async def test_content_saved(tmpdir):
     await save_content(b"test", path)
     with path.open() as f:
         assert f.read() == "test"
+
+
+@pytest.mark.asyncio
+async def test_exceptions_handled(mocker):
+    mocker.patch("asyncio.sleep")
+    error_logger = mocker.patch("znamotobot.updater.logger.error")
+    invalid_url = aiohttp.client_exceptions.InvalidURL(...)
+
+    update_index = mocker.patch(
+        "znamotobot.updater.IndexUpdater.update_index",
+        AsyncMock(
+            side_effect=[
+                invalid_url,
+                asyncio.CancelledError(),
+            ]
+        ),
+    )
+
+    updater = IndexUpdater()
+    await updater.start()
+
+    assert update_index.call_count == 2
+    error_logger.assert_called_once_with("HTTP client error", exc_info=invalid_url)

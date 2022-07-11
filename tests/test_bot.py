@@ -1,7 +1,7 @@
 import pytest
 
 from unittest.mock import AsyncMock
-from znamotobot.bot import handle_inline_query
+from znamotobot.bot import BotRunner, handle_inline_query
 from znamotobot.index import Index
 
 

@@ -1,19 +1,18 @@
 """Telegram bot."""
-import asyncio
 import logging
 
-from aiogram import Bot, Dispatcher, executor
+from aiogram import Bot, Dispatcher
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.types import (
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
     InlineQuery,
     InlineQueryResultArticle,
     InputTextMessageContent,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
 )
 
 from znamotobot import settings
-from znamotobot.updater import update_index
+from znamotobot.runner import BotRunner
 
 logging.basicConfig(
     level=settings.LOG_LEVEL,
@@ -64,13 +63,5 @@ def build_topics_content(title, topics: str) -> InputTextMessageContent:
     )
 
 
-def main():
-    asyncio.run(update_index())
-    asyncio.set_event_loop(asyncio.new_event_loop())
-    executor.start_polling(
-        dp, skip_updates=True, timeout=settings.TELEGRAM_POLLING_TIMEOUT
-    )
-
-
 if __name__ == "__main__":
-    main()
+    BotRunner(dp).start()
