@@ -25,3 +25,18 @@ TELEGRAM_TOKEN = env("TELEGRAM_TOKEN")
 INDEX_UPDATE_PERIOD = env.float("INDEX_UPDATE_PERIOD", 600)
 INDEX_DOWNLOAD_TIMEOUT = env.float("INDEX_DOWNLOAD_TIMEOUT", 60)
 INDEX_CACHE_DIR = env("INDEX_CACHE_DIR", "cache")
+
+
+SENTRY_ENABLE = env.bool("SENTRY_ENABLE", False)
+if SENTRY_ENABLE:
+    import sentry_sdk
+    from sentry_sdk.integrations.aiohttp import AioHttpIntegration
+
+    sentry_sdk.init(
+        dsn=env.str("SENTRY_DSN"),
+        integrations=[AioHttpIntegration()],
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        # We recommend adjusting this value in production.
+        traces_sample_rate=0.00001,
+    )
