@@ -12,6 +12,7 @@ from aiogram.types import (
 )
 
 from znamotobot import settings
+from znamotobot.pagination import Page
 from znamotobot.runner import BotRunner
 
 logging.basicConfig(
@@ -37,6 +38,11 @@ async def handle_inline_query(inline_query: InlineQuery):
             switch_inline_query_current_chat="",
         )
     )
+    sections = Page(
+        items=settings.INDEX.search(inline_query.query),
+        limit=settings.INLINE_QUERY_ITEMS_PER_PAGE,
+        offset=int(inline_query.offset or 0),
+    )
     menu = [
         InlineQueryResultArticle(
             id=str(hash(title)),
@@ -45,12 +51,13 @@ async def handle_inline_query(inline_query: InlineQuery):
             hide_url=True,
             reply_markup=keyboard,
         )
-        for title, topics in settings.INDEX.search(inline_query.query)
+        for title, topics in sections
     ]
     await bot.answer_inline_query(
         inline_query.id,
         menu,
         cache_time=settings.TELEGRAM_INLINE_CACHE_TIME,
+        next_offset=str(sections.next_offset or ""),
     )
 
 

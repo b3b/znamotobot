@@ -2,6 +2,7 @@
 import logging
 
 from environs import Env
+from marshmallow.validate import Range
 
 from znamotobot.index import Index
 
@@ -17,6 +18,9 @@ INLINE_MESSAGE_HEADER = env(
     "INLINE_MESSAGE_HEADER", "🙋‍Information on the topic <b>{title}</b>"
 )
 INLINE_MESSAGE_REMIND_TEXT = env("INLINE_MESSAGE_REMIND_TEXT", "Remind about 💬")
+INLINE_QUERY_ITEMS_PER_PAGE = env.int(
+    "INLINE_QUERY_ITEMS_PER_PAGE", 50, validate=Range(min=0, max=50)
+)
 
 TELEGRAM_INLINE_CACHE_TIME = env.float("TELEGRAM_INLINE_CACHE_TIME", 120)
 TELEGRAM_POLLING_TIMEOUT = env.float("TELEGRAM_POLLING_TIMEOUT", 30)
