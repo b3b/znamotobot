@@ -63,7 +63,9 @@ class IndexUpdater:
             )
         else:
             path = self.url
-        settings.INDEX = Index.from_markdown(path)
+        settings.INDEX = await asyncio.get_event_loop().run_in_executor(
+            None, Index.from_markdown, path
+        )
 
     async def shutdown(self):
         if self._session:

@@ -18,9 +18,13 @@ async def test_index_updated_from_url(tmpdir, mocker):
     cache_dir = tmpdir / "cache"
     assert not cache_dir.exists()
 
-    mocker.patch("znamotobot.settings.INDEX_URL", "https://example.org")
-    mocker.patch("znamotobot.settings.INDEX_CACHE_DIR", cache_dir)
-    from_markdown = mocker.patch("znamotobot.index.Index.from_markdown")
+    mocked_settings = mocker.patch("znamotobot.updater.settings")
+    mocked_settings.INDEX_URL = "https://example.org"
+    mocked_settings.INDEX_CACHE_DIR = cache_dir
+    parsed_index = mocker.Mock()
+    from_markdown = mocker.patch(
+        "znamotobot.index.Index.from_markdown", return_value=parsed_index
+    )
     download_file = mocker.patch("znamotobot.updater.download_file")
 
     updater = IndexUpdater()
@@ -29,6 +33,7 @@ async def test_index_updated_from_url(tmpdir, mocker):
     download_file.assert_called_once()
     from_markdown.assert_called_once()
     assert cache_dir.exists()
+    assert mocked_settings.INDEX == parsed_index
 
     await updater.shutdown()
 
