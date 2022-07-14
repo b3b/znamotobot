@@ -30,7 +30,7 @@ Simply type the `@YourAwesomeBotName` in the message field in any chat,
 then (optinally) type some text to filter sections.
 The bot will offer you sections that you can send in one tap.
 
-.. note:: Bot must have `Inline mode <https://core.telegram.org/bots/inline>`_ enabled via @BotFather
+Bot must have `Inline mode <https://core.telegram.org/bots/inline>`_ enabled via @BotFather.
 
 Usage demonstration
 -------------------
@@ -56,12 +56,10 @@ Lists are in Markdown format:
 
     ## Usability features
 
-    * [Chat folders](https://t.me/telegram/127) — Helps if you have too many chats
-
+    * [Chat folders](https://t.me/telegram/127) — Helps if you have *too many* chats
     * [Attachment menu](https://t.me/telegram/171)
       When selecting multiple media items, tap  ‘⋯ selected’
       to **preview the message** and **reorder media** before sending
-
     * [Inline bots](https://t.me/telegram/26)
 
 
