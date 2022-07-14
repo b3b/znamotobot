@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+
+    bot:
+      image: herethere/znamotobot:latest
+      environment:
+        INDEX_URL: 'https://raw.githubusercontent.com/b3b/znamotobot/main/tests/basic.md'
+        INDEX_UPDATE_PERIOD: 600
+        INLINE_MESSAGE_HEADER: '🙋‍Information on topic <b>{title}</b>'
+        INLINE_MESSAGE_REMIND_TEXT: 'Remind about 💬'
+        LOG_LEVEL: 'INFO'
+        TELEGRAM_TOKEN: '...' # https://core.telegram.org/bots#6-botfather
+        TELEGRAM_POLLING_TIMEOUT: 30
+        TELEGRAM_INLINE_CACHE_TIME: 120
